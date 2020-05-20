@@ -16,7 +16,7 @@ Step 6: If/when you add a Background.js page, visit your <a href="chrome://exten
 
 <img src="documentation/structure.png">
 
-<h3>Best Practices: Make Post Requests from the Content Page - only Background.js!</h3>
+<h3>Best Practices: Make Post Requests from the Background (not Content Page)</h3>
 
 Most sites have triggers that listen for when external apps are making post requests directly from the DOM (i.e. the Content.js page). As a Chrome Extension developer, you have the most privacy from the 'popup.js' page, and the 'background.js' pages, because popup.js and background.js are part of the Chrome Browser's Internal Structure.
 
