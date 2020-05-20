@@ -20,7 +20,7 @@ Step 6: If/when you add a Background.js page, visit your <a href="chrome://exten
 
 Most sites have triggers that listen for when external apps are making post requests directly from the DOM (i.e. the Content.js page). As a Chrome Extension developer, you have the most privacy from the 'popup.js' page, and the 'background.js' pages, because popup.js and background.js are part of the Chrome Browser's Internal Structure.
 
-Here's a code example of how the communication between background.js and content.js work:
+Here's a code example of how the communication between background.js and content.js might look like:
 
 
 Content.js:
@@ -28,7 +28,7 @@ Content.js:
 chrome.runtime.sendMessage({type: "imageData", images: stuffToSave});
 ```
 
-Popup.js (or Background.js):
+And here's how to listen for a message from the Popup.js, or Background.js:
 ```javascript
 chrome.runtime.onMessage.addListener(
         function(message, sender, sendResponse) {
