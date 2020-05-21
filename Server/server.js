@@ -13,8 +13,9 @@ app.use(bodyParser.urlencoded({limit: '200mb', extended: true}));
 
 app.use(cors({ origin: "*"}));
 
-app.post('save-products', (req, res)=>{
-	console.log('req in save-products route: ', req);
+app.post('/save-products', (req, res)=>{
+	console.log('req.body in save-products route: ', req.body);
+	res.send('all good in the hood');
 })
 
 const port = process.env.PORT || 8000;
