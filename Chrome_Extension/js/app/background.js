@@ -11,6 +11,7 @@ chrome.runtime.onMessage.addListener(
                 userLoginCreds.username = message.data.email.split('@')[0];
                 ajaxCall("POST", "user/login", userLoginCreds, function(response){
                    console.log('response from server is: ',response);
+                   sendResponse(response);
                 })
                 return true;
                 break;
@@ -20,6 +21,7 @@ chrome.runtime.onMessage.addListener(
               userCreds.username = message.data.email.split('@')[0];
               ajaxCall("POST", "user/signup", userCreds, function(response){
                   console.log('response from server is: ',response);
+                  sendResponse(response);
               })
             	return true;
                 break;

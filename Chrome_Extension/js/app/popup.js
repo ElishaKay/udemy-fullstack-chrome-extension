@@ -17,6 +17,10 @@ myAmazonHistory.config(function($stateProvider, $urlRouterProvider){
 			url: '/signup',
 			templateUrl: '../views/signup.html'
 		})
+		.state('welcome', {
+			url: '/welcome',
+			templateUrl: '../views/welcome.html'
+		})
 		
 		
 
@@ -31,6 +35,11 @@ myAmazonHistory.controller("PopupCtrl", ['$scope', '$state', function($scope, $s
 		chrome.runtime.sendMessage({type: "login", data: formData},
 			function(response){
 				console.log('response from the background is: ', response);
+				if(response.user){
+					$scope.name = response.user.username; 
+					$state.go('welcome');	
+				}
+				
 			} 
 		)
 	}
@@ -40,8 +49,16 @@ myAmazonHistory.controller("PopupCtrl", ['$scope', '$state', function($scope, $s
 		chrome.runtime.sendMessage({type: "signup", data: formData},
 			function(response){
 				console.log('response from the background is: ', response);
+				if(response.token){
+					$state.go('login');
+				}
 			} 
 		)
 	}
 
-}])
+}]);
+
+
+myAmazonHistory.controller("ScraperCtrl", ['$scope', '$state', function($scope, $state){
+	console.log('ScraperCtrl Initialized');
+}]);
