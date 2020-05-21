@@ -32,6 +32,12 @@ myAmazonHistory.controller("PopupCtrl", ['$scope', '$state', function($scope, $s
 
 	$scope.signup = function(formData){
 		console.log('formData from Signup: ', formData);
+		chrome.runtime.sendMessage({type: "signup", data: formData},
+			function(response){
+				console.log('response from the background is: ', response);
+			} 
+
+		)
 	}
 
 }])
