@@ -16,15 +16,15 @@ where root = your mongo username, and alibaba1 = your db password
 
 <h3>How To Setup Your Chrome Extension</h3>
 
-Step 2: Navigate to your <a href="chrome://extensions">Chrome Extensions Tab</a>
+1) Navigate to your <a href="chrome://extensions">Chrome Extensions Tab</a>
 
-Step 3: Click the "Developer Mode" switch (on the top right of the screen) (should be enabled)
+2) Click the "Developer Mode" switch (on the top right of the screen) (should be enabled)
 
-Step 4: Click "Load Unpacked" button. Choose the directory of the unzipped folder (the manifest.json file should be in the root directory chosen).
+3) Click "Load Unpacked" button. Choose the directory of the unzipped folder (the manifest.json file should be in the root directory chosen).
 
-Step 5: Visit <a href="amazon.com">https://www.amazon.com</a>, and open your Dev Console. You should see the text 'content script ran' logged in your dev console. 
+4) Visit <a href="amazon.com">https://www.amazon.com</a>, and open your Dev Console. You should see the text 'content script ran' logged in your dev console. 
 
-Step 6: If/when you add a Background.js page, visit your <a href="chrome://extensions">Chrome Extensions Tab</a> again, and find the new Extension you just uploaded. Click the "background.html" link - this will give you a Chrome developer tools GUI to view what's happening in the "background.js" of your Chrome Extension.
+5) If/when you add a Background.js page, visit your <a href="chrome://extensions">Chrome Extensions Tab</a> again, and find the new Extension you just uploaded. Click the "background.html" link - this will give you a Chrome developer tools GUI to view what's happening in the "background.js" of your Chrome Extension.
 
 <h3>Chrome Extension Structure</h3>
 
