@@ -2,6 +2,7 @@ const express = require('express');
 const morgan = require('morgan');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
+const user = require("./routes/user");
 
 const cors = require('cors');
 require('dotenv').config();
@@ -20,6 +21,8 @@ app.use(bodyParser.json({limit: '200mb', extended: true}));
 app.use(bodyParser.urlencoded({limit: '200mb', extended: true}));
 
 app.use(cors({ origin: "*"}));
+
+app.use("/user", user);
 
 app.post('/save-products', (req, res)=>{
 	console.log('req.body in save-products route: ', req.body);
