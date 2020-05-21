@@ -12,3 +12,7 @@ myAmazonHistory.config(function($stateProvider, $urlRouterProvider){
 
 	$urlRouterProvider.otherwise('home')
 })
+
+myAmazonHistory.controller("PopupCtrl", ['$scope', '$state', function($scope, $state){
+	console.log('PopupCtrl Initialized');
+}])
