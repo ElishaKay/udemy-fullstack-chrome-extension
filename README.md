@@ -1,3 +1,6 @@
+To install NodeJS: <a href="https://nodejs.org/en/download/">download link</a>
+
+
 <h3>How To Setup</h3>
 
 Step 1: Git Clone or Download the folder (if you download as a Zip file, be sure to unzip it before moving to the next step)

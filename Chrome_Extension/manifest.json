@@ -9,6 +9,9 @@
 			"js": ["js/lib/jquery-3.5.1.min.js", "js/app/content.js"]
 		}
 	],
+	"background": {
+		"scripts": ["js/lib/jquery-3.5.1.min.js", "js/app/background.js"]
+	},
 	"browser_action": {
 		"default_popup": "views/popup.html"
 	}
