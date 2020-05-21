@@ -9,10 +9,18 @@ myAmazonHistory.config(function($stateProvider, $urlRouterProvider){
 			url: '/home',
 			templateUrl: '../views/home.html'
 		})
+		.state('login', {
+			url: '/login',
+			templateUrl: '../views/login.html'
+		})
 
-	$urlRouterProvider.otherwise('home')
+	$urlRouterProvider.otherwise('login')
 })
 
 myAmazonHistory.controller("PopupCtrl", ['$scope', '$state', function($scope, $state){
 	console.log('PopupCtrl Initialized');
+
+	$scope.login = function(formData){
+		console.log('formData: ', formData);
+	}
 }])
