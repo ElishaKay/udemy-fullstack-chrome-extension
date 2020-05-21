@@ -28,7 +28,7 @@ where root = your mongo username, and alibaba1 = your db password
 
 <h3>Chrome Extension Structure</h3>
 
-<img src="documentation/structure.png">
+<img src="Authentication%20flow%20-%20architecture.png">
 
 <h3>Best Practices: Make Post Requests from the Background (not Content Page)</h3>
 
