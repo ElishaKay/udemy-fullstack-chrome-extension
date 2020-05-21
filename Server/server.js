@@ -1,11 +1,19 @@
 const express = require('express');
 const morgan = require('morgan');
 const bodyParser = require('body-parser');
+const mongoose = require('mongoose');
 
 const cors = require('cors');
-require ('dotenv').config();
+require('dotenv').config();
 
 const app = express();
+
+mongoose
+	.connect(process.env.DEV_DB, {useNewUrlParser: true, useCreateIndex: true, UseFindAndModify: false})
+	.then(()=> console.log('DB Connected'))
+	.catch(err=>{
+		console.log(err);
+	})
 
 app.use(morgan('dev'));
 app.use(bodyParser.json({limit: '200mb', extended: true}));
