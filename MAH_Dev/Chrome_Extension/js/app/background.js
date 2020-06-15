@@ -2,9 +2,7 @@ console.log('background script ran');
 let dev = true;
 let domain = dev ? "http://localhost:8000/" : 'https://myamazonhistory.com/';
 
-ajaxCall("GET", "user/me", {}, getStorageItem('user') ? getStorageItem('user').token : '', function(response){
-    console.log('response from server is: ',response);
-})
+
 
 chrome.runtime.onMessage.addListener(
     function(message, sender, sendResponse) {
@@ -51,12 +49,12 @@ chrome.runtime.onMessage.addListener(
               } else {
                 multi_page = 1;
               }
-              
+
               message.data._id = getStorageItem('user').user._id;
               message.data.multi_page = multi_page;
               message.data.total_pages = paginationDetails.length == 0 ? 1 : paginationDetails.length; 
               setStorageItem(message.type, message.data);
-              ajaxCall('POST',message.data,'api/extension/products', function(response){
+              ajaxCall('POST', 'product', message.data, getStorageItem('user') ? getStorageItem('user').token : '', function(response){
                 let nextWhat = '';
                 let year = 0;
                 let startIndex = 0;
