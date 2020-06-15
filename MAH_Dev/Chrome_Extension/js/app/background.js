@@ -41,8 +41,58 @@ chrome.runtime.onMessage.addListener(
               }
               setStorageItem(message.type, purchaseYears);
               sendResponse('all good');
-                return true;
-                break;
+              return true;
+              break;
+            case 'ordersPageDetails':
+              let paginationDetails = message.data.paginationDetails;
+              if (paginationDetails === undefined || paginationDetails.length == 0) {
+                  page_number = 1; 
+                  multi_page = false;
+              } else {
+                multi_page = 1;
+              }
+              
+              message.data._id = getStorageItem('user').user._id;
+              message.data.multi_page = multi_page;
+              message.data.total_pages = paginationDetails.length == 0 ? 1 : paginationDetails.length; 
+              setStorageItem(message.type, message.data);
+              ajaxCall('POST',message.data,'api/extension/products', function(response){
+                let nextWhat = '';
+                let year = 0;
+                let startIndex = 0;
+                let purchaseYears = getStorageItem('purchaseYears');
+
+                console.log('response from api/extension/products',response);
+                if(response.multiPageYear=="false"){
+                  // ie lechatchila there was only one page for the year
+                  // find index of the year which was just scraped
+                  let index = purchaseYears.indexOf(response.purchaseYear.toString());
+
+                  //navigate to the next year in the purchaseYears Array
+                  nextWhat = 'nextYear';
+                  year = purchaseYears[index + 1];
+                } else {
+                  //multi-page year
+                  //step 1: check whether you just scraped the final page
+                  
+                  if(response.yearlyPageNumber == response.totalPagesOfYear){
+                    // find index of the year which was just scraped
+                    let index = purchaseYears.indexOf(response.purchaseYear.toString());
+                    //navigate to the next year in the purchaseYears Array
+                    nextWhat = 'nextYear';
+                    year = purchaseYears[index + 1];
+                  } else {
+                  // you are on a year page with more than one page in it 
+                  //& you need to navigate to the next page of the given year
+                    startIndex = response.yearlyPageNumber*10;
+                    nextWhat = 'nextPage';
+                    year = response.purchaseYear;
+                  }
+                }
+                sendResponse({nextWhat: nextWhat, year:year, startIndex:startIndex});
+                    });
+              return true;
+              break;
             default:
             	console.log('couldnt find matching case');
         }
