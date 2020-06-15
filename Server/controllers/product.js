@@ -1,8 +1,6 @@
-const Product = require('../models/product');
-const Page = require('../models/page');
+const Product = require('../model/product');
+const Page = require('../model/page');
 
-const slugify = require('slugify');
-const stripHtml = require('string-strip-html');
 const { smartTrim, enlargePhoto } = require('../helpers/product');
 
 exports.saveProducts = (req, res, next) => {
@@ -17,8 +15,6 @@ exports.saveProducts = (req, res, next) => {
         newProduct.product_imgurl = enlargePhoto(newProduct.product_imgurl);
 
         newProduct.title = newProduct.product_title;
-        newProduct.excerpt = smartTrim(product_summary, 320, ' ', ' ...');
-        newProduct.slug = slugify(newProduct.title).toLowerCase();
         
         newProduct.postedBy = _id;
 
