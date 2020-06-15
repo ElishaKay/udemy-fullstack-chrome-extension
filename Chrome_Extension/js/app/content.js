@@ -1,8 +1,7 @@
 console.log('content script ran');
 
 var url = window.location.href;
-
-console.log('url: ',url)
+console.log('url: ',url);
 
 // Fetching Orders Page Data
 if(url.includes('amazon.com/gp/css/order-history')){
@@ -58,9 +57,9 @@ function sendToBackground(eventName, eventData, callback){
                 console.log('this is the response from the background page for the '+ eventName+ ' Event: ',response);
                 if(eventName=='ordersPageDetails'){
                     if(response.nextWhat == 'nextYear'){
-                      window.location.href = 'https://www.amazon.com/gp/your-account/order-history?orderFilter=year-'+response.year+'&ahf=on';
+                      // window.location.href = 'https://www.amazon.com/gp/your-account/order-history?orderFilter=year-'+response.year+'&ahf=on';
                     } else if (response.nextWhat == 'nextPage' && typeof response.year != 'undefined'){
-                        window.location.href = 'https://www.amazon.com/gp/your-account/order-history/ref=ppx_yo_dt_b_pagination_1_2_3_4_5?ie=UTF8&orderFilter=year-'+response.year+'&search=&startIndex='+response.startIndex+'&ahf=on';
+                        // window.location.href = 'https://www.amazon.com/gp/your-account/order-history/ref=ppx_yo_dt_b_pagination_1_2_3_4_5?ie=UTF8&orderFilter=year-'+response.year+'&search=&startIndex='+response.startIndex+'&ahf=on';
                     }
                 } 
             }
@@ -107,9 +106,38 @@ function fetchYearlyOrders(){
         item.product_link = products[i].firstElementChild.firstElementChild.firstElementChild.href;   
         let imgurl = products[i].firstElementChild.firstElementChild.firstElementChild.innerHTML.split("\"");
         item.product_imgurl = imgurl[imgurl.findIndex(element => element.includes("images/I"))];
-        orderDetails.push(item);
+        orderDetails.push(fetchSummaryAndReviews(item));
     }
     return orderDetails;
+}
+
+function fetchSummaryAndReviews(product){
+    ajaxGet(product.product_link.split('amazon.com')[1], function(response){
+        let element = $($.parseHTML( response ));
+        product.product_summary = element.find("div").attr("data-feature-name", 'editorialReviews').prev("noscript")[0].innerHTML;
+        // product.product_summary = element.find("div [id*=dmusic_tracklist_player]");
+        let reviews = element.find("div [id*=customer_review]");
+        product.product_reviews = [];
+        //save reviews html in array
+        for (i = 0; i < reviews.length; i++) {
+          let review = reviews[i];
+          product.product_reviews.push($(review).find('div:nth-child(5)>span>div>div>span')[0].innerHTML.trim());
+        }
+        return product;
+    })
+}
+
+function ajaxGet(url, callback){
+  $.ajax({
+        url: url, 
+        type: 'GET',
+        success: function(a) {
+          callback(a);
+        },
+        error: function(a) {
+          console.log("Error: ",a);
+        }
+    });
 }
 
 function checkAndGetPagination(){
