@@ -9,12 +9,7 @@ const productSchema = new mongoose.Schema(
             min: 3,
             max: 160,
             required: true
-        },
-        slug: {
-            type: String,
-            unique: true,
-            index: true
-        },
+        }, 
         body: {
             type: {},
             min: 200,
@@ -77,7 +72,5 @@ const productSchema = new mongoose.Schema(
     },
     { timestamps: true }
 );
-
-productSchema.index({ _id: 1, asin: 1 }, { unique: true });
 
 module.exports = mongoose.model('Product', productSchema);
