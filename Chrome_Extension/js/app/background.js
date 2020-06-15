@@ -62,7 +62,7 @@ chrome.runtime.onMessage.addListener(
 
                 console.log('response from api/extension/products',response);
                 if(response.multiPageYear=="false"){
-                  // ie lechatchila there was only one page for the year
+                  // ie to begin with, there was only one page for the year
                   // find index of the year which was just scraped
                   let index = purchaseYears.indexOf(response.purchaseYear.toString());
 
@@ -88,7 +88,7 @@ chrome.runtime.onMessage.addListener(
                   }
                 }
                 sendResponse({nextWhat: nextWhat, year:year, startIndex:startIndex});
-                    });
+              });
               return true;
               break;
             default:
