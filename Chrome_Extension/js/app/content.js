@@ -2,6 +2,7 @@ console.log('content script ran');
 
 var url = window.location.href;
 console.log('url: ',url);
+let orderDetails = [];
 
 // Fetching Orders Page Data
 if(url.includes('amazon.com/gp/css/order-history')){
@@ -39,12 +40,13 @@ if(url.includes('amazon.com/gp/css/order-history')){
     }
 
     window.scrollTo(0,document.querySelector(".navLeftFooter").scrollHeight+5000);
+    fetchYearlyOrders();
 
     setTimeout(function(){ 
         sendToBackground("ordersPageDetails", 
                          {"purchase_year": getYear(),
                           "page_number": getPageNumber(),
-                          "orderDetails": fetchYearlyOrders(),
+                          "orderDetails": orderDetails,
                           "paginationDetails": checkAndGetPagination()});
         }, 
     10000);
@@ -95,7 +97,6 @@ function getPageNumber(){
 let page_number = 1;
 
 function fetchYearlyOrders(){
-    let orderDetails = [];
     let products = document.querySelectorAll('.a-fixed-left-grid-inner')
     for (i = 0; i < products.length; i++) {
         let item = {};
@@ -106,9 +107,8 @@ function fetchYearlyOrders(){
         item.product_link = products[i].firstElementChild.firstElementChild.firstElementChild.href;   
         let imgurl = products[i].firstElementChild.firstElementChild.firstElementChild.innerHTML.split("\"");
         item.product_imgurl = imgurl[imgurl.findIndex(element => element.includes("images/I"))];
-        orderDetails.push(fetchSummaryAndReviews(item));
+        fetchSummaryAndReviews(item);
     }
-    return orderDetails;
 }
 
 function fetchSummaryAndReviews(product){
@@ -123,7 +123,7 @@ function fetchSummaryAndReviews(product){
           let review = reviews[i];
           product.product_reviews.push($(review).find('div:nth-child(5)>span>div>div>span')[0].innerHTML.trim());
         }
-        return product;
+        orderDetails.push(product);
     })
 }
 
