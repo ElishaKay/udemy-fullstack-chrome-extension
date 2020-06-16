@@ -99,6 +99,19 @@ chrome.runtime.onMessage.addListener(
               });
               return true;
               break;
+            case 'initiateSearchScraping':
+              console.log('message: ',message);
+              chrome.tabs.create({url: message.search_url + '&asf=on'});  
+              return true;
+              break;
+            case 'initiateSearchKeywordsScraping':
+              console.log('message: ',message);
+              let search_keywords = message.search_keywords.split(',');
+              setStorageItem('search_keywords',search_keywords);
+              var search_url = 'https://www.amazon.com/s?k='+ search_keywords[0];
+              chrome.tabs.create({url: search_url + '&asf=on'});  
+              return true;
+              break;
             case 'searchPageData':
               console.log('data in searchPageData case: ', message);
               setStorageItem('searchPageDetails', {searchKeyword: message.data.searchKeyword, totalSearchPages: message.data.totalSearchPages, searchPageNumber: parseInt(message.data.searchPageNumber) } ); 
