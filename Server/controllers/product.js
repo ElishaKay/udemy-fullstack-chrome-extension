@@ -64,23 +64,23 @@ exports.saveProductsFromSearch = (req, res, next) => {
             newProduct.search_keyword = searchKeyword;
             let newKeys = searchPageData[y];
 
-            Object.assign(newPost, newKeys);
-            newPost.product_imgurl = enlargePhoto(newPost.product_imgurl);
+            Object.assign(newProduct, newKeys);
+            newProduct.product_imgurl = enlargePhoto(newProduct.product_imgurl);
 
-            newPost.title = newPost.product_title;
+            newProduct.title = newProduct.product_title;
            
-            // newPost.postedBy = req.user._id;
-            // newPost.asin = newPost.product_link != null ? newPost.product_link.split('/dp/')[1].split('/')[0] : '';
-            newPost.postedBy = _id;
+            // newProduct.postedBy = req.user._id;
+            // newProduct.asin = newProduct.product_link != null ? newProduct.product_link.split('/dp/')[1].split('/')[0] : '';
+            newProduct.postedBy = _id;
             
-            newPost.product_rating = isNaN(newPost.product_rating) ? delete newPost.product_rating : newPost.product_rating;
+            newProduct.product_rating = isNaN(newProduct.product_rating) ? delete newProduct.product_rating : newProduct.product_rating;
             
-            newPost.save((err, newPostCreated) => {
+            newProduct.save((err, newProductCreated) => {
                 if (err) {
                     if(err.code == 11000){
                         console.log('duplicate key error:', err.errmsg);
                     } else {
-                       console.log('this is the error from the newPost.save call:', err);                    
+                       console.log('this is the error from the newProduct.save call:', err);                    
                     }
                     // return res.status(400).json({
                     //     error: errorHandler(err)
