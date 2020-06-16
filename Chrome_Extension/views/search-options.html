@@ -1,0 +1,26 @@
+<div ng-controller="ScraperCtrl">
+
+    <p>Sure thing! Please Refine your Amazon Search Results Page, and Press 'Start Scraping' when you're ready to begin. Please note: The app will automatically navigate to the Next Page until it reaches the final page of the given Search Results</p>
+
+    <a ng-click="initiateSearchScraping()" class="btn btn-block btn-info">
+        Only Scrape Current Search</a>
+    <br/>
+
+    <p class="pt-3">Alternatively, if you'd like to scrape Search Results for several keywords please insert the keywords below in comma-separated format (i.e. 'javascript, c++, html')</p>
+
+    <div class="form-group">
+        <label for="name">Amazon Search Keywords</label>
+        <input type="text" class="form-control" name="search_keywords" placeholder="javascript, c++, html" ng-model="search_keywords">
+    </div>
+
+    <a ng-click="initiateSearchKeywordsScraping(search_keywords)" class="btn btn-block btn-info">
+        Scrape Results of These Keywords</a>
+    <br/>
+    <div class="row">
+        <div class="jumbotron text-muted text-center">
+            <p>Need Assistance?
+              <a target="_blank" href="https://myamazonhistory.com/contact">Contact Support Here</a>!</p>
+        </div>
+    </div>
+    
+</div>

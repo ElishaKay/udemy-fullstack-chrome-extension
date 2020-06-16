@@ -21,6 +21,10 @@ myAmazonHistory.config(function($stateProvider, $urlRouterProvider){
 			url: '/welcome',
 			templateUrl: '../views/welcome.html'
 		})
+		.state('search-options', {
+			url: '/search-options',
+			templateUrl: '../views/search-options.html'
+		})
 		
 		
 
@@ -91,4 +95,46 @@ myAmazonHistory.controller("ScraperCtrl", ['$scope', '$state', function($scope, 
             }
         ); 
     }
+
+    $scope.showSearchOptions = function(){
+    	$state.go('search-options');
+    }
+
+     //scrape search results
+    $scope.initiateSearchScraping = function(){
+        chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
+            console.log('tabs', tabs);
+            chrome.runtime.sendMessage({type:"initiateSearchScraping", search_url: tabs[0].url }, 
+                function(response){
+                    console.log('this is the response from the content page for the initiateSearchScraping Event',response); 
+                    if(response.error){
+                        let theErrorMessage = response.data.responseJSON.error;
+                        console.log('theErrorMessage:',theErrorMessage);
+                        $scope.errorMessage = theErrorMessage;
+                        $scope.error = true;  
+                    } else {
+                         $state.go('home.dance-time');
+                    }
+                }
+            ); 
+        });  
+    }
+
+    $scope.initiateSearchKeywordsScraping = function(search_keywords){
+        console.log('search_keywords: ',search_keywords)
+        chrome.runtime.sendMessage({type:"initiateSearchKeywordsScraping", search_keywords: search_keywords }, 
+            function(response){
+                console.log('this is the response from the content page for the initiateSearchKeywordsScraping Event',response); 
+                if(response.error){
+                    let theErrorMessage = response.data.responseJSON.error;
+                    console.log('theErrorMessage:',theErrorMessage);
+                    $scope.errorMessage = theErrorMessage;
+                    $scope.error = true;  
+                } else {
+                     $state.go('home.dance-time');
+                }
+            }
+        );   
+    }
+
 }]);
