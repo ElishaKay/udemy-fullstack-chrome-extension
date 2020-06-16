@@ -1,9 +1,8 @@
 console.log('content script ran');
 var url = window.location.href;
 console.log('url: ',url);
-let orderDetails = [];
 let page_number = 1;
-let searchPageData = [];
+let productData = [];
 
 // Fetching Orders Page Data
 if(url.includes('amazon.com/gp/css/order-history')){
@@ -47,7 +46,7 @@ if(url.includes('amazon.com/gp/css/order-history')){
         sendToBackground("ordersPageDetails", 
                          {"purchase_year": getYear(),
                           "page_number": getPageNumber(),
-                          "orderDetails": orderDetails,
+                          "orderDetails": productData,
                           "paginationDetails": checkAndGetPagination()});
         }, 
     10000);
@@ -136,7 +135,7 @@ function fetchSummaryAndReviews(product){
           let review = reviews[i];
           product.product_reviews.push($(review).find('div:nth-child(5)>span>div>div>span')[0].innerHTML.trim());
         }
-        orderDetails.push(product) : searchPageData.push(product);
+        productData.push(product);
     })
 }
 
@@ -219,7 +218,7 @@ if(url.includes('amazon.com/s?k=') && url.includes('asf=on')){
 
   setTimeout(function(){ 
     sendToBackground("searchPageData", 
-             {"searchPageData": searchPageData,
+             {"searchPageData": productData,
               "searchKeyword": getURLParam('k'),
               "totalSearchPages": getTotalSearchPages(),
               "searchPageNumber": getSearchPageNumber()});

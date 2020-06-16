@@ -99,6 +99,10 @@ chrome.runtime.onMessage.addListener(
               });
               return true;
               break;
+            case 'searchPageData':
+              console.log('message in searchPageData case of background: ',message);
+              return true;
+              break;
             default:
             	console.log('couldnt find matching case');
         }
