@@ -60,8 +60,8 @@ exports.saveProductsFromSearch = (req, res, next) => {
         return res.json({searchKeyword: searchKeyword, nextWhat:'nextKeyword'});
     } else {
         for (let y = 0; y < searchPageData.length; y++) {
-            let newPost = new Blog();
-            newPost.search_keyword = searchKeyword;
+            let newProduct = new Product();
+            newProduct.search_keyword = searchKeyword;
             let newKeys = searchPageData[y];
 
             Object.assign(newPost, newKeys);

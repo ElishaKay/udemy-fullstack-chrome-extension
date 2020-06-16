@@ -100,7 +100,47 @@ chrome.runtime.onMessage.addListener(
               return true;
               break;
             case 'searchPageData':
-              console.log('message in searchPageData case of background: ',message);
+              console.log('data in searchPageData case: ', message);
+              setStorageItem('searchPageDetails', {searchKeyword: message.data.searchKeyword, totalSearchPages: message.data.totalSearchPages, searchPageNumber: parseInt(message.data.searchPageNumber) } ); 
+              setStorageItem(message.type, message.data);
+              message.data._id = getStorageItem('user').user._id;
+              ajaxCall('POST', 'product/products-from-search', message.data, getStorageItem('user') ? getStorageItem('user').token : '', function(response){
+                  console.log('response from server for /extension/products-from-search post request:', response);
+                  let nextWhat = '';
+                  let searchKeyword = '';
+                  let nextPageNumber = 1;
+
+                  if(response.error){
+                    nextWhat = 'nextPage';
+                    //need to pull up keyword from localStorage
+                    let searchPageDetails = getStorageItem('searchPageDetails')
+                    nextPageNumber = searchPageDetails.searchPageNumber+1;
+                    searchKeyword = searchPageDetails.searchKeyword;
+                  } else if(response.searchPageNumber < response.totalSearchPages){
+                    nextWhat = 'nextPage';
+                    nextPageNumber = response.searchPageNumber+1;
+                    searchKeyword = response.searchKeyword; 
+                  } else if(response.searchPageNumber == 75 || response.nextWhat == 'nextKeyword'){
+                    nextWhat = 'nextKeyword';
+                    let search_keywords = getStorageItem('search_keywords');
+                    let index = search_keywords.indexOf(response.searchKeyword.toString());
+                    console.log('index of keyword: ', index);
+                    console.log('search_keywords: ', search_keywords);
+
+                    //navigate to the next keywords in the purchaseYears Array
+                    searchKeyword = search_keywords[index + 1];
+                  } else {
+                    nextWhat = 'nextKeyword';
+                    let search_keywords = getStorageItem('search_keywords');
+                    let index = search_keywords.indexOf(response.searchKeyword.toString());
+                    console.log('index of keyword: ', index);
+                    console.log('search_keywords: ', search_keywords);
+
+                    //navigate to the next keywords in the purchaseYears Array
+                    searchKeyword = search_keywords[index + 1];
+                  }
+                  sendResponse({nextWhat: nextWhat, nextPageNumber: nextPageNumber, searchKeyword: searchKeyword });                
+              });
               return true;
               break;
             default:
