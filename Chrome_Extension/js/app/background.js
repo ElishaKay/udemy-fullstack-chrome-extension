@@ -62,13 +62,13 @@ chrome.runtime.onMessage.addListener(
               message.data.multi_page = multi_page;
               message.data.total_pages = paginationDetails.length == 0 ? 1 : paginationDetails.length; 
               setStorageItem(message.type, message.data);
-              ajaxCall('POST', 'product', message.data, getStorageItem('user') ? getStorageItem('user').token : '', function(response){
+              ajaxCall('POST', 'product/products-from-history', message.data, getStorageItem('user') ? getStorageItem('user').token : '', function(response){
                 let nextWhat = '';
                 let year = 0;
                 let startIndex = 0;
                 let purchaseYears = getStorageItem('purchaseYears');
 
-                console.log('response from api/extension/products',response);
+                console.log('response from /product/products-from-history',response);
                 if(response.multiPageYear=="false"){
                   // ie to begin with, there was only one page for the year
                   // find index of the year which was just scraped
