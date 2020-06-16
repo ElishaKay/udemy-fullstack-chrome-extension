@@ -104,7 +104,7 @@ myAmazonHistory.controller("ScraperCtrl", ['$scope', '$state', function($scope, 
     $scope.initiateSearchScraping = function(){
         chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
             console.log('tabs', tabs);
-            chrome.runtime.sendMessage({type:"initiateSearchScraping", search_url: tabs[0].url }, 
+            chrome.runtime.sendMessage({type:"initiateSearchScraping", tabs: tabs, search_url: tabs[0].url }, 
                 function(response){
                     console.log('this is the response from the content page for the initiateSearchScraping Event',response); 
                     if(response.error){
