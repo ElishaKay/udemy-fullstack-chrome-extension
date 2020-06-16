@@ -89,7 +89,8 @@ exports.saveProductsFromSearch = (req, res, next) => {
                     console.log('product saved successfully');
                 }
             })
-
+        }
+    }
     //at end of for loop
     next(); 
 };
