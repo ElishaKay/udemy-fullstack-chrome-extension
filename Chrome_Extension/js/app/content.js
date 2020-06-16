@@ -59,9 +59,9 @@ function sendToBackground(eventName, eventData, callback){
                 console.log('this is the response from the background page for the '+ eventName+ ' Event: ',response);
                 if(eventName=='ordersPageDetails'){
                     if(response.nextWhat == 'nextYear'){
-                      // window.location.href = 'https://www.amazon.com/gp/your-account/order-history?orderFilter=year-'+response.year+'&ahf=on';
+                      window.location.href = 'https://www.amazon.com/gp/your-account/order-history?orderFilter=year-'+response.year+'&ahf=on';
                     } else if (response.nextWhat == 'nextPage' && typeof response.year != 'undefined'){
-                        // window.location.href = 'https://www.amazon.com/gp/your-account/order-history/ref=ppx_yo_dt_b_pagination_1_2_3_4_5?ie=UTF8&orderFilter=year-'+response.year+'&search=&startIndex='+response.startIndex+'&ahf=on';
+                      window.location.href = 'https://www.amazon.com/gp/your-account/order-history/ref=ppx_yo_dt_b_pagination_1_2_3_4_5?ie=UTF8&orderFilter=year-'+response.year+'&search=&startIndex='+response.startIndex+'&ahf=on';
                     }
                 } 
             }

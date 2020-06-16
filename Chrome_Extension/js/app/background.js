@@ -2,11 +2,14 @@ console.log('background script ran');
 let dev = true;
 let domain = dev ? "http://localhost:8000/" : 'https://myamazonhistory.com/';
 
-
-
 chrome.runtime.onMessage.addListener(
     function(message, sender, sendResponse) {
         switch(message.type) {
+            case 'onPopupInit':
+                console.log('ran onPopupInit Case in background.js');
+                sendResponse(getStorageItem('user'));
+                return true;
+                break;
             case "login":
                 console.log('login logic ran with formData = to', message.data);
                 let userLoginCreds = message.data;
@@ -28,6 +31,11 @@ chrome.runtime.onMessage.addListener(
               })
             	return true;
               break;
+            case 'initiateHistoryScraping':
+                console.log('message: ',message);
+                chrome.tabs.create({url: 'https://www.amazon.com/gp/css/order-history?ahf=on'});
+                return true;
+                break;
             case 'purchaseYears':
               console.log('purchaseYears event was hit in background');
               let purchaseYears = [];

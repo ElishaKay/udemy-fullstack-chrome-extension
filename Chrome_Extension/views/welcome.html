@@ -1,3 +1,19 @@
 <div ng-controller="ScraperCtrl">
-	<p>Welcome {{name}}</p>
+
+    <p>Hi there {{name}}, what would you like to scrape from Amazon Today?</p>
+
+    <a ng-click="fetchSearchResults()" class="btn btn-block btn-info">
+        Scrape Search Results</a>
+        <br/>
+
+        <a ng-click="fetchMyHistory()" class="btn btn-block btn-info">
+        Scrape My Purchase History</a>
+        <br/>
+        
+            <div class="row">
+              <div class="jumbotron text-muted text-center">
+                  <p>Need Assistance?
+                    <a target="_blank" href="https://myamazonhistory.com/contact">Contact Support</a>!</p>
+              </div>
+          </div>
 </div>
