@@ -1,4 +1,6 @@
 
+<a href='https://www.udemy.com/course/build-a-full-stack-chrome-extension-with-nodejs-and-mongdb/'>Repo For The Udemy Course: 'Build a Full-Stack Chrome Extension with NodeJS and MongDB'</a>
+
 First Step for setting up this repo:
 
 Git Clone or Download the folder (if you download as a Zip file, be sure to unzip it before uploading the extension code to chrome)
@@ -10,8 +12,8 @@ Git Clone or Download the folder (if you download as a Zip file, be sure to unzi
 2) Create a MongoDB Database (and User) on <a href="https://mlab.com">mLab</a> (or your local machine).
 
 3) Create a .env file within your Server's root folder
-DEV_DB=mongodb://root:alibaba1@ds215229.mlab.com:15229/udemy-extension-db
-where root = your mongo username, and alibaba1 = your db password
+DEV_DB=mongodb://root:{{password}}@ds215229.mlab.com:15229/udemy-extension-db
+where root = your mongo username, and {{password}} = your db password
 
 
 <h3>How To Setup Your Chrome Extension</h3>
