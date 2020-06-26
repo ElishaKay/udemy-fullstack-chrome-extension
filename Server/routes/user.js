@@ -98,16 +98,18 @@ router.post(
     }
 
     const { email, password } = req.body;
+    console.log('req.body on server', req.body)
     try {
       let user = await User.findOne({
         email
       });
+      console.log('user from db', user);
       if (!user)
         return res.status(400).json({
           message: "User Not Exist"
         });
 
-      const isMatch = await bcrypt.compare(password, user.password);
+      const isMatch = await bcrypt.compare(password.toString(), user.password.toString());
       if (!isMatch)
         return res.status(400).json({
           message: "Incorrect Password !"

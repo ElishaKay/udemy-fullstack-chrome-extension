@@ -39,10 +39,12 @@ myAmazonHistory.controller("PopupCtrl", ['$scope', '$state', function($scope, $s
         chrome.runtime.sendMessage({type:"onPopupInit"}, 
             function(response){
                 console.log('this is the response from the background page for onPopupInit message',response);
-                if(response.user){
+                if(response.user == null){
+                    console.log('no user logged in yet - show signup/login screen')
+                } else {
                     $scope.name = response.user.name;
                     $state.go('welcome');
-                }       
+                }
             }
         );
     };
